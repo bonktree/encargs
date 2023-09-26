@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 #include "util.h"
+#include <encargs-config.h>
 
 int unbase64_allocate(const char *p, size_t l, void **ret, size_t *ret_size);
 
