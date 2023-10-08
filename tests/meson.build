@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-2.0
 test('1-base64', find_program('1-base64.sh'), verbose: true, is_parallel: false)
 test(
     '2-exec-argz',

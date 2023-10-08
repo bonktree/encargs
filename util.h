@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-2.0
 #ifndef __E_common_util_h
 #define __E_common_util_h
 
