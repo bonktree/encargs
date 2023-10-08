@@ -1,4 +1,5 @@
 #!/bin/sh -e
+# SPDX-License-Identifier: MIT
 
 tst_no=0
 TestOut_PATH="$PATH"
