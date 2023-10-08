@@ -30,7 +30,7 @@ EOF
 # Our decoder always produces a null-terminated string,
 # so we do not detect empty operands.
 TestErr ./encargs base64: <<EOF
-./encargs: exec: No such file or directory
+./encargs: Empty command line.
 EOF
 TestErr ./encargs base64:1 <<EOF
 ./encargs: Unexpected end-of-string at input byte 1.

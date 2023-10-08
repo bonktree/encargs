@@ -63,12 +63,17 @@ void show_help_n_die(int exitcode) {
         exit(exitcode);
 }
 
-ssize_t argz_elements(const char* argz, size_t alen) {
+ssize_t argz_elements(const char** destv, const char* argz, size_t alen) {
+        const char** p = destv;
+        size_t ret = 0, l;
+
         if (alen > SSIZE_MAX)
                 alen = SSIZE_MAX;
-        size_t ret = 0, l;
+
         for (; alen;) {
-                l = strnlen(argz, alen-1);
+                l = strnlen(argz, alen - 1);
+                if (destv)
+                        *p++ = argz;
                 argz += l;
                 alen -= l;
                 if (*argz)
@@ -136,27 +141,18 @@ int main(int argc, char* argv[]) {
 
         _cleanup_free_ char** decargv;
         ssize_t decargv_len;
-        decargv_len = argz_elements(decargz, decargz_len);
+        decargv_len = argz_elements(NULL, decargz, decargz_len);
         if (decargv_len < 0)
                 error(EXIT_FAILURE, 0, "Truncated command line.");
+        if (decargv_len == 0)
+                error(EXIT_FAILURE, 0, "Empty command line.");
         decargv = calloc(sizeof(decargv[0]), decargv_len + 1);
         if (!decargv)
                 error(EXIT_FAILURE, ENOMEM, "ENOMEM");
 
-        char* p = decargz;
-        char** v = decargv;
-        size_t alen = decargz_len;
-        for (;;) {
-                size_t l;
-                l = strnlen(p, alen);
-                *v++ = p;
-                p += l;
-                alen -= l;
-                if (alen == 0)
-                        break;
-                p += 1;
-                alen -= 1;
-        }
+        const char** v = (const char**)decargv;
+        argz_elements(v, decargz, decargz_len);
+        v += decargv_len;
         *v++ = NULL;
 
         execvp(decargv[0], decargv);

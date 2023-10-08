@@ -172,5 +172,5 @@ L
 L:End_the_program
 EOArg
 )" <<EOF
-./encargs: exec: No such file or directory
+./encargs: Empty command line.
 EOF
