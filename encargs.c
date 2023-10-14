@@ -132,11 +132,11 @@ int main(int argc, char* argv[]) {
         if (ret == -EOPNOTSUPP)
                 error(EXIT_FAILURE, 0, "Missing or unknown operand encoding.");
         if (ret == -EPIPE)
-                error(EXIT_FAILURE, 0, "Unexpected end-of-string at input byte %" PRIu64 ".", decargz_len);
+                error(EXIT_FAILURE, 0, "Unexpected end-of-string at input byte %" "zu" ".", decargz_len);
         if (ret == -EILSEQ)
-                error(EXIT_FAILURE, 0, "Invalid input byte %" PRIu64 ".", decargz_len);
+                error(EXIT_FAILURE, 0, "Invalid input byte %" "zu" ".", decargz_len);
         if (ret == -ENAMETOOLONG)
-                error(EXIT_FAILURE, 0, "Trailing rubbish at input byte %" PRIu64 ".", decargz_len);
+                error(EXIT_FAILURE, 0, "Trailing rubbish at input byte %" "zu" ".", decargz_len);
         if (ret < 0)
                 error(EXIT_FAILURE, -ret, "Decoding error");
 
